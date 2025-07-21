@@ -1,0 +1,31 @@
+.children {
+  margin-top: 1.5rem;
+  position: relative;
+  animation: expandChildren 0.3s ease-out;
+}
+
+.children::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #667eea, rgba(102, 126, 234, 0.3));
+  border-radius: 1px;
+}
+
+.children .tree-node {
+  position: relative;
+}
+
+.children .tree-node::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 24px;
+  width: 20px;
+  height: 2px;
+  background: linear-gradient(to right, #667eea, rgba(102, 126, 234, 0.3));
+  border-radius: 1px;
+}

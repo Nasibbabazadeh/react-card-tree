@@ -1,0 +1,172 @@
+/* Size variants */
+.x2s {
+    font-size: 10px;
+    line-height: 14px;
+}
+
+.xs {
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.sm {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.base {
+    font-size: 15px;
+    line-height: 22px;
+}
+
+.md {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.lg {
+    font-size: 18px;
+    line-height: 28px;
+}
+
+.xl {
+    font-size: 20px;
+    line-height: 28px;
+}
+
+.xxl {
+    font-size: 22px;
+    line-height: 30px;
+}
+.x2l {
+    font-size: 24px;
+    line-height: 32px;
+}
+
+.x3l {
+    font-size: 30px;
+    line-height: 38px;
+}
+
+.x4l {
+    font-size: 36px;
+    line-height: 40px;
+}
+.x5l {
+    font-size: 48px;
+    line-height: 56px;
+}
+
+@media (max-width: 768px) {
+    .x5l {
+        font-size: 32px;
+        line-height: 40px;
+    }
+    .lg {
+        font-size: 16px;
+        line-height: 20px;
+    }
+    .md {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}
+
+/* Weight variants */
+.regular {
+    font-weight: 400;
+}
+
+.medium {
+    font-weight: 500;
+}
+
+.semibold {
+    font-weight: 600;
+}
+
+.bold {
+    font-weight: 700;
+}
+/* color variants */
+.primary {
+    color: var(--text-main);
+}
+
+.primary2 {
+    color: var(--color-primary-2);
+}
+
+.secondary {
+    color: var(--text-secondary);
+}
+
+.secondary2 {
+    color: var(--text-secondary-2);
+}
+.white {
+    color: var(--text-white);
+}
+
+.gray {
+    color: var(--text-gray);
+}
+
+.gray2 {
+    color: var(--text-gray-2);
+}
+.orangePrimary {
+    color: var(--color-primary);
+}
+
+.orangeMain {
+    color: var(--orange-main);
+}
+/* wrap */
+.noWrap {
+    text-wrap: nowrap;
+}
+
+.balanced {
+    text-wrap: balance;
+}
+
+.wrap {
+    text-wrap: wrap;
+}
+
+/* hover */
+
+.hoverPrimary:hover {
+    color: var(--text-main);
+}
+
+.hoverPrimary2:hover {
+    color: var(--color-primary-2);
+}
+
+.hoverSecondary:hover {
+    color: var(--text-secondary);
+}
+
+.hoverSecondary2:hover {
+    color: var(--text-secondary-2);
+}
+
+.hoverWhite:hover {
+    color: var(--text-white);
+}
+
+.hoverDanger:hover {
+    color: var(--color-danger);
+}
+
+.danger {
+    color: var(--color-danger);
+}
+
+/* align */
+
+.alignCenter {
+    text-align: center;
+}
