@@ -14,7 +14,6 @@ import { useTreeStore } from "./store/use-tree-store";
 
 function App() {
 
-
   const {
     treeData,
     addChild,
