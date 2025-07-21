@@ -1,10 +1,10 @@
 import React from "react";
 import { ChevronDown, ChevronRight, Pencil, Plus, Trash2 } from "lucide-react";
-import type { ITreeNode } from "../../types";
-import Button from "../ui/button/button";
+import type { ITreeNode } from "../../../lib/types";
+import Button from "../../ui/button/button";
 import styles from "./styles.module.css";
-import Flex from "../ui/flex/flex";
-import Text from "../ui/text/text";
+import Flex from "../../ui/flex/flex";
+import Text from "../../ui/text/text";
 
 interface IProps {
   node: ITreeNode;
@@ -29,7 +29,7 @@ export const TreeNodeItemComponent: React.FC<IProps> = ({
   const isCollapsed = isNodeCollapsed(node.id);
 
   return (
-    <div className={styles.node} style={{ marginLeft: `${level * 20}px` }}>
+    <div className={styles.node} data-level={level}>
       <div className={styles.card}>
         <div className={styles.header}>
           <div className={styles.info}>
@@ -48,7 +48,7 @@ export const TreeNodeItemComponent: React.FC<IProps> = ({
                 #{node.id} - {node.name}
               </Text>
             </div>
-            <p className={styles.description}>{node.description}</p>
+            <Text color="secondary" weight="medium">Ətraflı : {node.description}</Text>
           </div>
           <Flex gap="sm" align="center" className={styles.actions}>
             <Button onClick={() => onAddChild(node.id)} icon={<Plus />} />

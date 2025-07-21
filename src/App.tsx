@@ -1,19 +1,14 @@
 import { useState } from "react";
 import "./App.css";
-import { TreeNodeListComponent } from "./components/tree-node-list/tree-node-list";
-import type { IEditingNode, ITreeNode } from "./types";
-import { NodeForm } from "./components/node-form/node-form";
-import { CircleAlert, Plus } from "lucide-react";
-import Button from "./components/ui/button/button";
-import Flex from "./components/ui/flex/flex";
-import Text from "./components/ui/text/text";
+import { useTreeStore } from "./lib/store/use-tree-store";
+
+import TreeContainer from "./components/card-node/container";
 import { Dialog } from "./components/dialog/dialog";
-import { useTreeStore } from "./store/use-tree-store";
-
-
+import type { IEditingNode, ITreeNode } from "./lib/types";
+import { Header } from "./components/card-node/header";
+import { NodeForm } from "./components/card-node/node-form/node-form";
 
 function App() {
-
   const {
     treeData,
     addChild,
@@ -87,35 +82,16 @@ function App() {
 
   return (
     <div className="app">
-      <Flex as="header" justify="between" align="center" className="header" >
-        <Text as="h1" weight="semibold">Kart əlavə et</Text>
-        <Button
-          onClick={() => openAddModal(null)}
-          icon={<Plus />}></Button>
-      </Flex>
+      <Header onAddClick={() => openAddModal(null)} />
 
-      <Flex className="tree-container" justify="center" align="center">
-        {treeData.length === 0 ? (
-          <Flex align="center" gap="lg">
-            <CircleAlert size={32} />
-            <Text size="lg">Hazırda kart mövcud deyildir</Text>
-          </Flex>
-        ) : (
-          treeData.map((node) => (
-            <TreeNodeListComponent
-              key={node.id}
-              node={node}
-              onAddChild={openAddModal}
-              onEdit={openEditModal}
-              onDelete={handleDelete}
-              onToggleCollapse={toggleNodeCollapse}
-              isNodeCollapsed={isNodeCollapsed}
-              level={0}
-            />
-          ))
-        )}
-      </Flex>
-
+      <TreeContainer
+        treeData={treeData}
+        onAddChild={openAddModal}
+        onEdit={openEditModal}
+        onDelete={handleDelete}
+        onToggleCollapse={toggleNodeCollapse}
+        isNodeCollapsed={isNodeCollapsed}
+      />
 
       <Dialog isOpen={modalState.isOpen} onClose={closeModal}>
         <NodeForm

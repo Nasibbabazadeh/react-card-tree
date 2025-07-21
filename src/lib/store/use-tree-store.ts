@@ -1,7 +1,12 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { ITreeNode } from "../types";
-
+import {
+  insertNodeRecursive,
+  updateNodeRecursive,
+  deleteNodeRecursive,
+  findMaxIdRecursive,
+} from '../utils/index'
 interface ITreeState {
   treeData: ITreeNode[];
   nextId: number;
@@ -29,60 +34,25 @@ export const useTreeStore = create<ITreeState>()(
           children: [],
         };
 
-        const insertNode = (nodes: ITreeNode[]): ITreeNode[] =>
-          nodes.map((node) =>
-            node.id === parentId
-              ? { ...node, children: [...node.children, newNode] }
-              : { ...node, children: insertNode(node.children) }
-          );
-
         set((state) => ({
           treeData:
             parentId === null
               ? [...state.treeData, newNode]
-              : insertNode(state.treeData),
+              : insertNodeRecursive(state.treeData, parentId, newNode),
           nextId: state.nextId + 1,
         }));
       },
 
       updateNode: (nodeId, name, description) => {
-        const updateRecursive = (nodes: ITreeNode[]): ITreeNode[] =>
-          nodes.map((node) =>
-            node.id === nodeId
-              ? { ...node, name, description }
-              : { ...node, children: updateRecursive(node.children) }
-          );
-
         set((state) => ({
-          treeData: updateRecursive(state.treeData),
+          treeData: updateNodeRecursive(state.treeData, nodeId, name, description),
         }));
       },
 
       deleteNode: (nodeId) => {
-        const deleteRecursive = (nodes: ITreeNode[]): ITreeNode[] =>
-          nodes
-            .filter((node) => node.id !== nodeId)
-            .map((node) => ({
-              ...node,
-              children: deleteRecursive(node.children),
-            }));
-
-        const findMaxId = (nodes: ITreeNode[]): number => {
-          let max = 0;
-          const traverse = (list: ITreeNode[]) => {
-            for (const node of list) {
-              if (node.id > max) max = node.id;
-              traverse(node.children);
-            }
-          };
-          traverse(nodes);
-          return max;
-        };
-
         set((state) => {
-          const newTree = deleteRecursive(state.treeData);
-          const maxId = findMaxId(newTree);
-
+          const newTree = deleteNodeRecursive(state.treeData, nodeId);
+          const maxId = findMaxIdRecursive(newTree);
           return {
             treeData: newTree,
             collapsedNodes: state.collapsedNodes.filter((id) => id !== nodeId),
@@ -90,7 +60,6 @@ export const useTreeStore = create<ITreeState>()(
           };
         });
       },
-
 
       toggleNodeCollapse: (nodeId) => {
         const isCollapsed = get().collapsedNodes.includes(nodeId);
@@ -101,13 +70,8 @@ export const useTreeStore = create<ITreeState>()(
         }));
       },
 
-      isNodeCollapsed: (nodeId) => {
-        return get().collapsedNodes.includes(nodeId);
-      },
+      isNodeCollapsed: (nodeId) => get().collapsedNodes.includes(nodeId),
     }),
-
-    {
-      name: "tree-store",
-    }
+    { name: "tree-store" }
   )
 );

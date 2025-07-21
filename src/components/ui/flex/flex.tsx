@@ -3,7 +3,7 @@ import React from 'react';
 import { type VariantProps, cva } from 'class-variance-authority';
 
 import styles from './flex.module.css';
-import type { TPolymorphicComponentProps } from '../../../types/util';
+import type { TPolymorphicComponentProps } from '../../../lib/types/util';
 
 export const flexVariants = cva(styles.root, {
   variants: {

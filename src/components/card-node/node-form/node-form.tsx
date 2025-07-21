@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Button from "../ui/button/button";
+import Button from "../../ui/button/button";
 import styles from "./styles.module.css";
-import Text from "../ui/text/text";
+import Text from "../../ui/text/text";
 
 interface IProps {
   initialData?: { name: string; description: string };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { type TPolymorphicComponentProps } from '../../../types/util';
+import { type TPolymorphicComponentProps } from '../../../lib/types/util';
 import { type VariantProps, cva } from 'class-variance-authority';
 
 import styles from './text.module.css';
@@ -34,15 +34,7 @@ export const textVariants = cva(
       },
       color: {
         primary: styles.primary,
-        primary2: styles.primary2,
         secondary: styles.secondary,
-        secondary2: styles.secondary2,
-        gray: styles.gray,
-        gray2: styles.gray2,
-        danger: styles.danger,
-        white: styles.white,
-        orangeMain: styles.orangeMain,
-        orangePrimary: styles.orangePrimary
       },
       wrap: {
         noWrap: styles.noWrap,
@@ -51,11 +43,7 @@ export const textVariants = cva(
       },
       hover: {
         primary: styles.hoverPrimary,
-        primary2: styles.hoverPrimary2,
         secondary: styles.hoverSecondary,
-        secondary2: styles.hoverSecondary2,
-        danger: styles.danger,
-        white: styles.hoverWhite,
       },
     },
     defaultVariants: {
