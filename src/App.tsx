@@ -3,20 +3,24 @@ import "./App.css";
 import { useTreeStore } from "./lib/store/use-tree-store";
 
 import TreeContainer from "./components/card-node/container";
-import { Dialog } from "./components/dialog/dialog";
-import type { IEditingNode, ITreeNode } from "./lib/types";
 import { Header } from "./components/card-node/header";
 import { NodeForm } from "./components/card-node/node-form/node-form";
+import DeleteDialog from "./components/dialogs/delete-dialog/dialog";
+import { Dialog } from "./components/dialogs/form-dialog/dialog";
+import { DialogProvider } from "./components/ui/dialog";
+import { useDialogStore } from "./lib/store/dialog";
+import type { IEditingNode, ITreeNode } from "./lib/types";
 
 function App() {
   const {
     treeData,
     addChild,
     updateNode,
-    deleteNode,
     toggleNodeCollapse,
     isNodeCollapsed,
   } = useTreeStore();
+
+  const open = useDialogStore(state => state.open)
 
   const [modalState, setModalState] = useState<{
     isOpen: boolean;
@@ -70,25 +74,29 @@ function App() {
     closeModal();
   };
 
-  const handleDelete = (nodeId: number) => {
-    if (
-      window.confirm(
-        "Are you sure you want to delete this node and all its children?"
-      )
-    ) {
-      deleteNode(nodeId);
-    }
+
+
+
+  const openDeleteDialog = (nodeId: number) => {
+    open({
+      content: (dialog) => (
+        <DeleteDialog
+          dialog={dialog}
+          nodeId={nodeId}
+        />
+      ),
+    });
   };
 
   return (
     <div className="app">
+      <DialogProvider />
       <Header onAddClick={() => openAddModal(null)} />
-
       <TreeContainer
         treeData={treeData}
         onAddChild={openAddModal}
         onEdit={openEditModal}
-        onDelete={handleDelete}
+        onDelete={openDeleteDialog}
         onToggleCollapse={toggleNodeCollapse}
         isNodeCollapsed={isNodeCollapsed}
       />

@@ -1,10 +1,11 @@
 import React from "react";
-import { ChevronDown, ChevronRight, Pencil, Plus, Trash2 } from "lucide-react";
+import { ChevronRight, Pencil, Plus, Trash2 } from "lucide-react";
 import type { ITreeNode } from "../../../lib/types";
 import Button from "../../ui/button/button";
 import styles from "./styles.module.css";
 import Flex from "../../ui/flex/flex";
 import Text from "../../ui/text/text";
+import { cn } from "../../../lib/utils";
 
 interface IProps {
   node: ITreeNode;
@@ -36,12 +37,13 @@ export const TreeNodeItemComponent: React.FC<IProps> = ({
             <div className={styles.titleRow}>
               {hasChildren && (
                 <Button
-                  className="btn-collapse"
                   onClick={() => onToggleCollapse(node.id)}
-                  title={isCollapsed ? "Expand" : "Collapse"}
+                  className={cn(styles.collapse,
+                    !isCollapsed && styles.animateCollapse
+                  )}
                   aria-expanded={!isCollapsed}
+                  icon={<ChevronRight />}
                 >
-                  {isCollapsed ? <ChevronRight /> : <ChevronDown />}
                 </Button>
               )}
               <Text size="xl" weight="medium">
@@ -50,11 +52,13 @@ export const TreeNodeItemComponent: React.FC<IProps> = ({
             </div>
             <Text color="secondary" weight="medium">Ətraflı : {node.description}</Text>
           </div>
+
           <Flex gap="sm" align="center" className={styles.actions}>
             <Button onClick={() => onAddChild(node.id)} icon={<Plus />} />
             <Button onClick={() => onEdit(node)} variant="outline" icon={<Pencil />} />
             <Button onClick={() => onDelete(node.id)} icon={<Trash2 />} variant="destructive" />
           </Flex>
+
         </div>
       </div>
     </div>

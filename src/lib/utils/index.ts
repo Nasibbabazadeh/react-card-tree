@@ -1,3 +1,4 @@
+import { cx, type CxOptions } from "class-variance-authority";
 import type { ITreeNode } from "../types";
 
 export const insertNodeRecursive = (
@@ -42,3 +43,8 @@ export const findMaxIdRecursive = (nodes: ITreeNode[]): number => {
   traverse(nodes);
   return max;
 };
+
+
+export function cn(...inputs: CxOptions) {
+  return cx(inputs);
+}

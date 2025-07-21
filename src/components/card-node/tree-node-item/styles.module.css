@@ -52,3 +52,11 @@
 .actions {
   flex-shrink: 0;
 }
+
+.collapse svg {
+  transition: transform 0.3s ease;
+}
+
+.animateCollapse svg {
+  transform: rotate(90deg);
+}
