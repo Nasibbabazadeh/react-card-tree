@@ -6,7 +6,7 @@ export interface ITreeNode {
 }
 
 export interface IEditingNode {
-  id: number;
+  id: number | null;
   name: string;
   description: string;
 }

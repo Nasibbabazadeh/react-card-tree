@@ -7,18 +7,12 @@ import type { ITreeNode } from "../../lib/types";
 
 interface IProps {
   treeData: ITreeNode[];
-  onAddChild: (parentId: number | null) => void;
-  onEdit: (node: ITreeNode) => void;
-  onDelete: (nodeId: number) => void;
   onToggleCollapse: (nodeId: number) => void;
   isNodeCollapsed: (nodeId: number) => boolean;
 }
 
 const TreeContainer: React.FC<IProps> = ({
   treeData,
-  onAddChild,
-  onEdit,
-  onDelete,
   onToggleCollapse,
   isNodeCollapsed,
 }) => {
@@ -31,18 +25,17 @@ const TreeContainer: React.FC<IProps> = ({
           <Text size="lg">Hazırda kart mövcud deyildir</Text>
         </Flex>
       ) : (
-        treeData.map((node) => (
-          <TreeNodeListComponent
-            key={node.id}
-            node={node}
-            onAddChild={onAddChild}
-            onEdit={onEdit}
-            onDelete={onDelete}
-            onToggleCollapse={onToggleCollapse}
-            isNodeCollapsed={isNodeCollapsed}
-            level={0}
-          />
-        ))
+        treeData.map((node) => {
+          return (
+            <TreeNodeListComponent
+              key={node.id}
+              node={node}
+              onToggleCollapse={onToggleCollapse}
+              isNodeCollapsed={isNodeCollapsed}
+              level={0}
+            />
+          )
+        })
       )}
     </Flex>
   );

@@ -7,9 +7,6 @@ import styles from './styles.module.css'
 
 interface IProps {
   node: ITreeNode;
-  onAddChild: (parentId: number) => void;
-  onEdit: (node: ITreeNode) => void;
-  onDelete: (nodeId: number) => void;
   onToggleCollapse: (nodeId: number) => void;
   isNodeCollapsed: (nodeId: number) => boolean;
   level: number;
@@ -17,9 +14,6 @@ interface IProps {
 
 export const TreeNodeListComponent: React.FC<IProps> = ({
   node,
-  onAddChild,
-  onEdit,
-  onDelete,
   onToggleCollapse,
   isNodeCollapsed,
   level,
@@ -31,9 +25,6 @@ export const TreeNodeListComponent: React.FC<IProps> = ({
       <div className={styles.card}>
         <TreeNodeItemComponent
           node={node}
-          onAddChild={onAddChild}
-          onEdit={onEdit}
-          onDelete={onDelete}
           onToggleCollapse={onToggleCollapse}
           isNodeCollapsed={isNodeCollapsed}
           level={level}
@@ -45,9 +36,6 @@ export const TreeNodeListComponent: React.FC<IProps> = ({
               <TreeNodeListComponent
                 key={child.id}
                 node={child}
-                onAddChild={onAddChild}
-                onEdit={onEdit}
-                onDelete={onDelete}
                 onToggleCollapse={onToggleCollapse}
                 isNodeCollapsed={isNodeCollapsed}
                 level={level + 1}

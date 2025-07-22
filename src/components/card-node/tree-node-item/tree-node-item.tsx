@@ -6,12 +6,12 @@ import styles from "./styles.module.css";
 import Flex from "../../ui/flex/flex";
 import Text from "../../ui/text/text";
 import { cn } from "../../../lib/utils";
+import { useDialogStore } from "../../../lib/store/dialog";
+import DeleteDialog from "../../dialogs/delete-dialog/dialog";
+import ActionsDialog from "../../dialogs/actions-dialog/dialog";
 
 interface IProps {
   node: ITreeNode;
-  onAddChild: (parentId: number) => void;
-  onEdit: (node: ITreeNode) => void;
-  onDelete: (nodeId: number) => void;
   onToggleCollapse: (nodeId: number) => void;
   isNodeCollapsed: (nodeId: number) => boolean;
   level: number;
@@ -19,15 +19,37 @@ interface IProps {
 
 export const TreeNodeItemComponent: React.FC<IProps> = ({
   node,
-  onAddChild,
-  onEdit,
-  onDelete,
   onToggleCollapse,
   isNodeCollapsed,
   level,
 }) => {
   const hasChildren = node.children.length > 0;
   const isCollapsed = isNodeCollapsed(node.id);
+  const open = useDialogStore(state => state.open)
+
+  const openDeleteDialog = (nodeId: number) => {
+    open({
+      content: (dialog) => (
+        <DeleteDialog
+          dialog={dialog}
+          nodeId={nodeId}
+        />
+      ),
+    });
+  };
+
+
+  const openActionsDialog = (type: "add" | "edit", credentials: any) => {
+    open({
+      content: (dialog) => (
+        <ActionsDialog
+          dialog={dialog}
+          node={credentials}
+          type={type}
+        />
+      ),
+    });
+  };
 
   return (
     <div className={styles.node} data-level={level}>
@@ -54,9 +76,22 @@ export const TreeNodeItemComponent: React.FC<IProps> = ({
           </div>
 
           <Flex gap="sm" align="center" className={styles.actions}>
-            <Button onClick={() => onAddChild(node.id)} icon={<Plus />} />
-            <Button onClick={() => onEdit(node)} variant="outline" icon={<Pencil />} />
-            <Button onClick={() => onDelete(node.id)} icon={<Trash2 />} variant="destructive" />
+            <Button
+              onClick={() => openActionsDialog("add", {
+                id: node.id,
+                name: "",
+                description: "",
+              })}
+              icon={<Plus />}
+            />
+            <Button onClick={() =>
+              openActionsDialog("edit", node)
+            } variant="outline"
+              icon={<Pencil />} />
+            <Button
+              onClick={() => openDeleteDialog(node.id)}
+              icon={<Trash2 />}
+              variant="destructive" />
           </Flex>
 
         </div>
